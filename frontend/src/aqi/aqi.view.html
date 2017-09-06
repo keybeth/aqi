@@ -1,0 +1,20 @@
+    <div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+			    <label for="city">Enter a city</label>
+			    <input id="city" places-auto-complete types="['geocode']" on-place-changed="ctrl.onPlaceChange()"/>
+			    <span class="text-danger" ng-if="ctrl.error">{{ctrl.error}}</span>
+			</div>
+			<ng-map id="mapa" center="{{ctrl.center}}" zoom="5">
+				<marker position="{{ctrl.position}}" on-click="ctrl.showMarker()" ng-if="ctrl.position"></marker>
+				<custom-marker position="{{ctrl.position}}" on-click="ctrl.closeMarker()" ng-if="ctrl.show">
+					<div class="marker-container {{'apl-'+ctrl.airPollutionLevel}}">
+						<h3>{{ctrl.city}}</h3>
+						Air Quality Index (AQI): {{ ctrl.aqi }}
+						<br>
+						Air Pollution Level: {{ ctrl.capitalizeAPL() }}
+					</div>
+				</custom-marker>
+			</ng-map>
+		</div><!-- /.col-xs-12 -->
+    </div><!-- /.row -->

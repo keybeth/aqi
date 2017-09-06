@@ -1,0 +1,53 @@
+.apl-good{
+	background-color:#009966;
+	color:white;
+}
+
+.apl-moderate{
+	background-color:#ffde33;
+	color:black;
+}
+
+.apl-little-unhealthy{
+	background-color:#ff9933;
+	color:black;
+}
+
+.apl-unhealthy{
+	background-color:#cc0033;
+	color:white;
+}
+
+.apl-very-unhealthy{
+	background-color:#660099;
+	color:white;
+}
+
+.apl-hazardous{
+	background-color:#7e0023;
+	color:white;
+}
+
+.apl-good:after{
+	border-color:#009966 transparent;
+}
+
+.apl-moderate:after{
+	border-color:#ffde33 transparent;
+}
+
+.apl-little-unhealthy:after{
+	border-color:#ff9933 transparent;
+}
+
+.apl-unhealthy:after{
+	border-color:#cc0033 transparent;
+}
+
+.apl-very-unhealthy:after{
+	border-color:#660099 transparent;
+}
+
+.apl-hazardous:after{
+	border-color:#7e0023 transparent;
+}
