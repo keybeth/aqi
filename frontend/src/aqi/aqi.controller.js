@@ -1,24 +1,65 @@
+/**
+* @memberof app
+* @name AqiController
+* @ngdoc controller
+*
+* @param  {service} $log 					Angular log service.
+* @param  {service} NgMap     				Service that represent the map and its information. 
+* @param  {service} AqiService       		Service to request to AQI in the API.
+* @param  {filter} 	slugToCapitalizeFilter	Filter to transform slug to capitalize.
+*
+* @description 
+*    Angular Controller to manage aqi page
+*
+* @attr {array} 	center 		location in latitude and longitude coordinates to center the map
+* @attr {array} 	position 	location in latitude and longitude coordinates to put the marker
+* @attr {boolean} 	show 		flag o control the hide/show the custom marker
+* @attr {string} 	airPollutionLevel 	the air pollution level corresponding to the AQI to the city
+* @attr {string} 	error 		error information to show in the view
+*/
 angular
     .module('app')
 	.controller('AqiController', AqiController);
 
-AqiController.$inject = ['$log','NgMap', 'AqiService','camelToCapitalizeFilter'];
+AqiController.$inject = ['$log','NgMap', 'AqiService','slugToCapitalizeFilter'];
 
-function AqiController($log,NgMap, AqiService, camelToCapitalizeFilter) {
-	
+function AqiController($log,NgMap, AqiService, slugToCapitalizeFilter) {	
+
 	var vm = this;
+
 	vm.center;
 	vm.position;
 	vm.show;
 	vm.airPollutionLevel;
 	vm.error;
-	
+
+
+	/**
+     * @function $onInit
+     *
+     * @memberof AqiController
+     *
+     * @description 
+     *    Init variables on init page.
+     *
+     */	
 	vm.$onInit = function(){
 		vm.center = [-33.4378305,-70.65044920000003]; //Santiago, Chile
 		vm.show = false;
 	};
+
 	
-	vm.onPlaceChange = function(event){
+	/**
+     * @function onPlaceChange
+     *
+     * @memberof AqiController
+     *
+     * @description 
+     *    Take the autocomplete place on every change and get the AQI from the API 
+     * and modify the marker information.
+     *
+     */
+	vm.onPlaceChange = function(){
         var place = this.getPlace();
         var loc = place.geometry.location;
         var city;
@@ -69,20 +110,50 @@ function AqiController($log,NgMap, AqiService, camelToCapitalizeFilter) {
 			vm.error = 'You should select a city';
 		}
 	};
+
 	
+	/**
+     * @function showMarker
+     *
+     * @memberof AqiController
+     *
+     * @description 
+     *    Open the custom marker on the map.     *
+     */
 	vm.showMarker = function(){
 		vm.show = true;
 	};
+
 	
+	/**
+     * @function closeMarker
+     *
+     * @memberof AqiController
+     *
+     * @description 
+     *    Close the custom marker on the map.
+     *
+     */
 	vm.closeMarker = function(){
 		vm.show = false;
 	};
 
+
+	/**
+     * @function capitalizeAPL
+     *
+     * @memberof AqiController
+     *
+     * @description 
+     *    Capitalize Air Pollution Level to show in the page.
+     *
+     */
 	vm.capitalizeAPL = function () {
-		return vm.airPollutionLevel ? camelToCapitalizeFilter(vm.airPollutionLevel): null;
+		return vm.airPollutionLevel ? slugToCapitalizeFilter(vm.airPollutionLevel): null;
 	}
 
-	function initMarker () {
+
+	function initMarker() {
         vm.closeMarker();
         vm.city = null;
 		vm.position = null;

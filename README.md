@@ -1,42 +1,48 @@
-### ATTENTION
-This is one of the first Angular JS repositories I created, if you like component pattern
-and want a seed project use [Angular JS 1.X ES6 seed](https://github.com/tomastrajan/angular-js-es6-testing-example)
-which implements `component pattern`, contains better `webpack` build and advanced
-testing support out of the box, happy hacking!
+###Air Quality Index information.
 
-# Component Pattern for Angular JS 1.X
+Aplicacion separada en capas Frontend y Backend para la mostrar la información del índice 
+de calidad del aire en una ciudad seleccionada a través de un input en la vista.
 
-* original blog post describing [Component Pattern](https://medium.com/@tomastrajan/component-paradigm-cf32e94ba78b)
-* presentation describing history of Angular JS concepts and [Component Pattern](https://slides.com/tomastrajan/component-pattern-for-angular-js-1-x)
+Se tiene configurado un contenedor Docker para desplegar tanto el frontend como el 
+backend por separado.
 
-![Components](/src/asset/image/components.jpg?raw=true "Component Patternf for Angular JS 1.X")
+####Tecnologías utilizadas:
 
-## Features
+* Angular 1.6
+* ExpressJS
+* Gulp
+* NodeJs
+* Docker
+* JsDoc
 
-* standard implementation of a state using `ui-router`
-* component implementation used as inline template in `ui-router` state definition
-* ES6, Webpack
+####Instalación
+Clonar este repo e instalar las dependencias de node:
 
-## Installation
+    $ git clone https://github.com/keybeth/aqi
+    $ cd aqi/backend
+    $ npm install
+    $ cd ../frontend
+    $ npm install
 
-To use it, just clone this repo and install the npm dependencies:
+####Scripts
 
-```shell
-$ git clone https://github.com/tomastrajan/component-pattern-for-angular-js-1-x component_pattern_example
-$ cd component_pattern_example
-$ npm install
-```
+En la carpeta **frontend**
 
-## Scripts
+* `gulp build` - Armar bundle
 
-All scripts are run with `npm run [script]`, for example: `npm run test`.
+* `gulp serve` - Para correr servidor de prueba
 
-* `build` - generate a minified build to dist folder
-* `dev` - start development server, try it by opening `http://localhost:8080/`
-* `test` - run all tests
-* `test:live` - continuously run unit tests watching for changes
+* `docker build -t MiNombre` - Crear contenedor
 
-## Credits
+* `docker run MiNombre` - Correr contenedor  
+	
+	
+En la carpeta **backend**
 
-This example uses build process from [angular-webpack-workflow](https://github.com/Foxandxss/angular-webpack-workflow),
-so check it out for more information if needed.
+* `nodemon ./server.js` - Para correr servidor de prueba
+
+* `docker build -t MiNombre` - Crear contenedor
+
+* `docker run MiNombre` - Correr contenedor 
+	
+

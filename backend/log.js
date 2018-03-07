@@ -1,3 +1,6 @@
+/** Log Module
+ * @module log
+ */
 var dateFormat = require('dateformat');
 
 exports.log = function (){

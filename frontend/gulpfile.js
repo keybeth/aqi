@@ -23,6 +23,7 @@ var autoprefixer = require('autoprefixer');
 var postcss = require('gulp-postcss');
 var strip = require('gulp-strip-comments');
 var fs = require('fs');
+var shell = require('gulp-shell');
 var prop = require('./gulp.json');
 
 var argv = require('yargs')
@@ -173,7 +174,7 @@ gulp.task('libs',function(){
 
 // Minify core JS files and copy the result file and html components templates to destination path 
 gulp.task('core',function(){
-	minifyJs(['!'+prop.config.path+'/_temp/**',prop.config.path+'/**/*Module.js',prop.config.path+'/**/*.js'],'app');
+	minifyJs(['!'+prop.config.path+'/_temp/**','!'+prop.config.path+'/**/*.test.js',prop.config.path+'/**/*Module.js',prop.config.path+'/**/*.js'],'app');
 	
 	gulp.src(['!'+prop.config.path+'/_temp/**',prop.config.path+'/**/*.{html,xml}'])
 		.pipe(minifyHTML({
@@ -215,6 +216,15 @@ gulp.task('fonts',function(){
 	gulp.src(fonts)
 		.pipe(gulp.dest(prop.config.dest+'/assets/fonts'));
 });
+
+gulp.task('docs', shell.task([
+  'node node_modules/jsdoc/jsdoc.js '+
+    '-c node_modules/angular-jsdoc/common/conf.json '+  // config file
+    '-t node_modules/angular-jsdoc/angular-template '+  // template file
+    '-d docs '+                           				// output directory
+    './README.md ' +                            		// to include README.md as index contents
+    '-r src'                 							// source code directory
+]));
 
 // Watch modifications in the files
 gulp.task('watch', function () {
@@ -267,7 +277,7 @@ gulp.task('serve', ['watch'], function () {
 gulp.task('scripts',['core','libs']);
 
 gulp.task('build',['clean'], function () {
-    gulp.start(['scripts', 'styles', 'fonts', 'imagemin']);
+    gulp.start(['docs','scripts', 'styles', 'fonts', 'imagemin']);
 });
 
 gulp.task('default', ['build','watch','serve']);

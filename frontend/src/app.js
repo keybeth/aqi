@@ -13,9 +13,15 @@ angular
 	.run(run);
 
 
-
+/**
+* Init app getting constants from config.json file and manually bootstrapping the module
+* @memberof app
+* @ngdoc config
+* @name init
+* @param {object} config 	Application constants.
+*/
 angular.element(document).ready(
-	function($http) {
+	function init($http) {
 		$http.get('config.json').then(function (config) {
 			return config;
 	    },function (error) {
@@ -30,11 +36,30 @@ angular.element(document).ready(
 	}
 );
 
+/**
+* Bootstrap application setting constants.
+* @memberof app
+* @ngdoc config
+* @name bootstrapApplication
+* @param {object} config 	Application constants.
+*/
 function bootstrapApplication(config) {
 	angular.module('app').constant('CONSTANTS', config);
     angular.bootstrap(document, ['app']);
 }
 
+
+/**
+* Configures routes and log.
+* @memberof app
+* @ngdoc config
+* @name config
+* @param {service} 	$urlRouterProvider 			Watches $location and provides interface to default state
+* @param {service} 	$stateProvider 				Provider to configure the application's states.
+* @param {service} 	$urlMatcherFactoryProvider 	Configure the url matchers
+* @param {service} 	$logProvider 				Provider to configure the log service
+* @param {constant} CONSTANTS 					Constants defined in the application before bootstrapping
+*/
 function config($urlRouterProvider, $stateProvider, $urlMatcherFactoryProvider,$logProvider, CONSTANTS) {
 
 	$logProvider.debugEnabled(CONSTANTS.DEBUG || false);
@@ -57,6 +82,15 @@ function config($urlRouterProvider, $stateProvider, $urlMatcherFactoryProvider,$
         });
 }
 
+
+/**
+* Main run configurations
+* @memberof app
+* @ngdoc config
+* @name run
+* @param {service} 	$transitions	Angular Router service to manipulate the states transitions
+* @param {scope} 	$rootScope 		Application root scope
+*/
 function run($transitions, $rootScope){
 	$transitions.onSuccess( {}, function(trans) {
 		$rootScope.state = trans.$to().name;
